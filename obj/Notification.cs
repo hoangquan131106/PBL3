@@ -1,23 +1,15 @@
-namespace TrafficApp;
-
-public class Notification
+public class PaymentHistory
 {
-    public string NotificationId { get; set; }
-    public string Content { get; set; }
-    public string Type { get; set; }
+    public string PaymentId { get; set; }
 
-    public User User { get; set; }
+    public string TicketId { get; set; }
+    public string CCCD { get; set; }
+    public string VehicleId { get; set; }
 
-    public Notification(string id, User user, string content, string type)
-    {
-        NotificationId = id;
-        User = user;
-        Content = content;
-        Type = type;
-    }
+    public double Amount { get; set; }
+    public string Method { get; set; }
 
-    public string Display()
-    {
-        return $"{NotificationId} | {Content}";
-    }
+    public DateTime Date { get; set; }
+
+    public Ticket Ticket { get; set; }
 }

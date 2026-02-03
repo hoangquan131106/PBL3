@@ -1,26 +1,28 @@
-namespace TrafficApp;
-
 public class DrivingLicense
 {
-    public string LicenseNo { get; set; }
+    public string LicenseId { get; set; }
+
+    public string CCCD { get; set; }
+    public string VehicleId { get; set; }
+
     public string Class { get; set; }
+
+    public DateTime? IssueDate { get; set; }
+    public DateTime? ExpiryDate { get; set; }
+
+    public int CurPoint { get; set; }
+
     public string Status { get; set; }
 
     public User User { get; set; }
-    public Vehicle Vehicle { get; set; }
 
-    public DrivingLicense(string no, string cls, User user, Vehicle vehicle)
-    {
-        LicenseNo = no;
-        Class = cls;
-        User = user;
-        Vehicle = vehicle;
-        Status = "CÒN HẠN";
-    }
 
-    public string Display()
+    public void DeductPoint(int point)
     {
-        return $"{LicenseNo} | {Class} | {Status}";
+        CurPoint -= point;
+
+        if (CurPoint <= 0)
+            Status = "Tước quyền sử dụng";
     }
 }
 

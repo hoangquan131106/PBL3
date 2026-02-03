@@ -1,28 +1,33 @@
-namespace TrafficApp;
+using Microsoft.EntityFrameworkCore;
 
-public class ViolationType
+public class AppDbContext : DbContext
 {
-    public string ViolationTypeId { get; set; }
-    public string Name { get; set; }
-    public decimal FineMin { get; set; }
-    public decimal FineMax { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Officer> Officers { get; set; }
+    public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<TrafficLaw> TrafficLaws { get; set; }
+    public DbSet<ViolationType> ViolationTypes { get; set; }
+    public DbSet<Ticket> Tickets { get; set; }
+    public DbSet<TicketDetail> TicketDetails { get; set; }
+    public DbSet<DrivingLicense> DrivingLicenses { get; set; }
+    public DbSet<Complaint> Complaints { get; set; }
+    public DbSet<PaymentHistory> PaymentHistories { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
-    public RegulationTrafficLaw Regulation { get; set; }
-    public List<Violation> Violations { get; set; } = new();
 
-    public ViolationType(string id, string name, decimal min, decimal max, RegulationTrafficLaw reg)
+    protected override void OnModelCreating(ModelBuilder model)
     {
-        ViolationTypeId = id;
-        Name = name;
-        FineMin = min;
-        FineMax = max;
-        Regulation = reg;
+        model.Entity<Officer>().HasBaseType<User>();
 
-        reg.ViolationTypes.Add(this);
-    }
+        model.Entity<Vehicle>()
+            .HasOne(v => v.Owner)
+            .WithMany();
 
-    public string Display()
-    {
-        return $"{ViolationTypeId} | {Name} | {FineMin}-{FineMax}";
+        model.Entity<ViolationType>()
+            .HasOne(v => v.Law)
+            .WithMany(l => l.ViolationTypes);
+
+        model.Entity<TicketDetail>()
+            .HasKey(x => new { x.TicketId, x.ViolationId });
     }
 }

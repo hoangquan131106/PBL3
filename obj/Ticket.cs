@@ -1,20 +1,35 @@
-namespace TrafficApp;
+using System.Linq;
 
-public class Customer : User
+public class Ticket
 {
-    public Customer(string id, string n, string p, string email, string pass = "")
-        : base(id, n, p, email, pass)
-    {
-        role_pos = "KHÁCH HÀNG";
-    }
+    public string TicketId { get; set; }
 
-    public override string GetRole()
-    {
-        return role_pos;
-    }
+    public string BadgeNumber { get; set; }
+    public string VehicleId { get; set; }
+    public string CCCD { get; set; }
 
-    public override string Display()
+    public DateTime ViolationTime { get; set; }
+    public string Location { get; set; }
+    public string Status { get; set; }
+
+    public double TotalAmount { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+
+    public Officer Officer { get; set; }
+    public Vehicle Vehicle { get; set; }
+    public User User { get; set; }
+
+    public List<TicketDetail> Details { get; set; } = new();
+
+    public void CalculateTotalFine()
     {
-        return base.Display();
+        TotalAmount = Details.Sum(x => x.Violation.FineMin);
+    }
+    public void UpdateLicensePoints(DrivingLicense license)
+    {
+        foreach (var d in Details)
+            license.DeductPoint(d.Violation.PenaltyPoint);
     }
 }

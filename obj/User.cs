@@ -1,38 +1,23 @@
-namespace TrafficApp;
-
-public abstract class User
+public class User
 {
-    protected string role_pos;
+    public string CCCD { get; set; }
 
-    public string Id { get; set; }
     public string Name { get; set; }
-    public string Phone { get; set; }
-    public string Email { get; set; }
+    public DateTime? Birthday { get; set; }
+    public string Gender { get; set; }
+    public string Address { get; set; }
+
     public string Password { get; set; }
-    public List<Vehicle> Vehicles { get; set; } = new();
-public List<DrivingLicense> DrivingLicenses { get; set; } = new();
-public List<Complaint> Complaints { get; set; } = new();
-public List<Notification> Notifications { get; set; } = new();
+
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
 
-    protected User(string id, string n, string p, string email, string pass = "")
+    public virtual bool Login(string cccd, string password)
     {
-        Id = id;
-        Name = n;
-        Phone = p;
-        Email = email;
-        Password = pass;
+        return CCCD == cccd && Password == password;
     }
 
-    public virtual string GetRole()
-    {
-        return role_pos;
-    }
+    public void QuickSearch() { }
 
-    public virtual string Display()
-    {
-        return $"{Id} | {Name} | {Phone} | {Email} | {role_pos}";
-    }
-    
-
+    public void SearchLaw() { }
 }

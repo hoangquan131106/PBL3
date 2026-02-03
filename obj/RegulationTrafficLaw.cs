@@ -1,17 +1,11 @@
-namespace TrafficApp;
-
-public class RegulationTrafficLaw
+public class TrafficLaw
 {
     public string RegulationId { get; set; }
+
     public string Code { get; set; }
     public string Name { get; set; }
+    public DateTime? EffectiveDate { get; set; }
 
-    public List<ViolationType> ViolationTypes { get; set; } = new();
-
-    public RegulationTrafficLaw(string id, string code, string name)
-    {
-        RegulationId = id;
-        Code = code;
-        Name = name;
-    }
+    public List<ViolationType> ViolationTypes { get; set; }
 }
+
