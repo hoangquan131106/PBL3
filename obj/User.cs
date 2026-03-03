@@ -1,23 +1,25 @@
+namespace TrafficApp;
+
 public class User
 {
+    public string UserId { get; set; }
     public string CCCD { get; set; }
+    public string FullName { get; set; }
+    public string Role { get; set; }
 
-    public string Name { get; set; }
-    public DateTime? Birthday { get; set; }
-    public string Gender { get; set; }
-    public string Address { get; set; }
+    public List<Vehicle> Vehicles { get; set; } = new();
+    public List<ComplaintHistory> HandledHistories { get; set; } = new();
 
-    public string Password { get; set; }
-
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-
-    public virtual bool Login(string cccd, string password)
+    public User(string id, string cccd, string name, string role)
     {
-        return CCCD == cccd && Password == password;
+        UserId = id;
+        CCCD = cccd;
+        FullName = name;
+        Role = role;
     }
 
-    public void QuickSearch() { }
-
-    public void SearchLaw() { }
+    public string GetRole()
+    {
+        return Role;
+    }
 }
